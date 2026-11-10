@@ -6,9 +6,14 @@ function makeGrid(size) {
     cell.classList.add("cell");
     cell.style.setProperty("flex-basis", `calc(100% / ${size})`);
     container.appendChild(cell);
-    cell.addEventListener("mouseover", () => {
+    cell.addEventListener("mouseover", (e) => {
       let random = () => Math.floor(Math.random() * 256);
-      cell.style.backgroundColor = `rgb(${random()} ${random()} ${random()})`;
+      let opacity = getComputedStyle(e.target).opacity;
+      opacity = Number(opacity) + 0.1;
+      cell.style.opacity = `${opacity}`;
+      if (cell.style.backgroundColor === "") {
+        cell.style.backgroundColor = `rgb(${random()} ${random()} ${random()})`;
+      }
     });
   }
 }
@@ -23,7 +28,7 @@ btn.addEventListener("click", () => {
   );
   if (size > 0 && size < 100) {
     makeGrid(size);
-  } else alert("Please enter a value less than 100")
+  } else alert("Please enter a value less than 100");
 });
 
 makeGrid(16);
